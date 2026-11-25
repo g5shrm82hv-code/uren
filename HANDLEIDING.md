@@ -64,11 +64,11 @@ Dit gaat het makkelijkst op een computer (Windows of Mac).
 
 1. Tab **Week** → **Voorvertoning & afdrukken**. Controleer de waarden; het formulier staat er licht op de achtergrond (dat wordt niet geprint).
 2. Leg het doordrukformulier (beide vellen) in de printer. Kijk bij de eerste keer met een proef hoe het papier erin moet.
-3. Tik op **Afdrukken** → kies je printer. Gebruik deze instellingen:
+3. Tik op **Afdrukken**. Het deelmenu opent met een PDF van het formulier. Kies **Druk af** en je printer, met deze instellingen:
    - Papier: **A4**
    - Schaal: **100%** of **Werkelijke grootte**. Nooit “Passend maken” of “Aanpassen aan pagina”.
    - **1** exemplaar (het doordrukvel maakt de kopie).
-4. Werkt afdrukken vanuit de app niet goed (iOS is daar soms wisselvallig in)? Tik op **PDF** → kies in het deelmenu **Druk af**. Een PDF print op werkelijke grootte.
+4. Waarom via een PDF? Bij afdrukken vanuit de browser voegt iOS eigen marges en een kop-/voettekst toe (webadres, datum, paginanummer). Dan verschuift alles en loopt het over naar een tweede pagina. Een PDF print op ware grootte. In de voorvertoning staat "Afdrukken via Safari" alleen nog als noodoptie.
 
 De app legt automatisch vast wanneer je een week hebt afgedrukt of als PDF hebt gemaakt. Wijzig je daarna nog iets, dan zie je “gewijzigd na de laatste afdruk”.
 
@@ -76,7 +76,7 @@ De app legt automatisch vast wanneer je een week hebt afgedrukt of als PDF hebt 
 
 De posities zijn gemeten uit de scan en kloppen ongeveer. Elke printer trekt het papier net iets anders in, dus stel het één keer bij:
 
-1. **Instellingen** → **Kalibratiepagina bekijken / afdrukken** → **Afdrukken** op een **wit A4-vel**.
+1. **Instellingen** → **Kalibratiepagina bekijken / afdrukken** → **Afdrukken** → **Druk af** op een **wit A4-vel**.
 2. Meet de liniaal onderaan: die moet **precies 100 mm** zijn. Is hij 99 mm, zet de schaal op **101%**.
 3. Leg het vel op een leeg formulier en houd het tegen het licht.
 4. Staan de kruisjes 2 mm te ver naar rechts? Zet **horizontaal** op **−2,0**. Staan ze te laag? Maak **verticaal** negatief. Gebruik stapjes van 0,1 mm.

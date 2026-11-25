@@ -1,7 +1,7 @@
 /* Derks Uren – service worker: alles offline beschikbaar.
  * Na een update van de bestanden: verhoog VERSION, dan haalt de app de nieuwe versie op.
  */
-const VERSION = 'derks-uren-v1.0.1';
+const VERSION = 'derks-uren-v1.0.2';
 const FILES = [
   './',
   './index.html',

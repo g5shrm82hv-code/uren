@@ -602,7 +602,8 @@
       if (pr.length > 1) html += '<details><summary>Alle afdrukken (' + pr.length + ')</summary><ul>' + pr.slice().reverse().map(function (p) { return '<li>' + D.fmtDateTime(p.at) + ' – ' + (p.kind === 'pdf' ? 'PDF' : 'print') + '</li>'; }).join('') + '</ul></details>';
     }
     html += '<div class="btns mt"><button class="btn primary tall" data-p="preview">Voorvertoning &amp; afdrukken</button>' +
-      '<div class="btns two"><button class="btn" data-p="print">Afdrukken</button><button class="btn" data-p="pdf">PDF</button></div></div></div>';
+      '<button class="btn" data-p="print">Direct afdrukken</button></div>' +
+      '<p class="tiny muted mt" style="margin-bottom:0">Afdrukken opent het deelmenu: kies daar <b>Druk af</b>. Je kunt de PDF ook bewaren.</p></div>';
 
     // archief
     var weeks = {};
@@ -629,7 +630,6 @@
     $('[data-manual]', main).onclick = function () { openEditor(firstMissingOr(today()), true); };
     $('[data-p="preview"]', main).onclick = function () { openPreview(wi); };
     $('[data-p="print"]', main).onclick = function () { printWeek(wi); };
-    $('[data-p="pdf"]', main).onclick = function () { pdfWeek(wi); };
   }
 
   // ================================================================
@@ -673,8 +673,13 @@
     pr.innerHTML = sheetHTML(items, {});
     window.print(); // direct in de tik-actie, anders blokkeert iOS het soms
   }
+  /** Afdrukken via PDF: iOS print een PDF op ware grootte, zonder eigen marges of kop-/voettekst */
   function printWeek(wi) {
     if (!wi.totalQ && !confirm('Deze week bevat geen uren. Toch afdrukken?')) return;
+    pdfWeek(wi);
+  }
+  /** Noodoptie: afdrukken via Safari zelf (iOS voegt dan marges en kop-/voettekst toe) */
+  function browserPrintWeek(wi) {
     recordPrint(wi, 'print');
     doPrint(weekItems(wi));
     setTimeout(render, 400);
@@ -710,8 +715,10 @@
       '<label class="check"><input type="checkbox" id="pv-bg"' + (S.settings.showFormBg ? ' checked' : '') + '> Formulier op de achtergrond tonen (wordt niet geprint)</label>' +
       (warnCount ? '<div class="banner warn">' + plural(warnCount, 'tekst is', 'teksten zijn') + ' verkleind of ingekort om in het vakje te passen (oranje gemarkeerd).</div>' : '') +
       '<div class="preview-wrap" id="pv-wrap"><div class="preview-scale" id="pv-scale"></div></div>' +
-      '<p class="tiny muted mt">Afgedrukt wordt alleen de zwarte tekst' + (isCal ? ' en de kaders/kruisjes' : '') + ', zonder logo of formulierlijnen. Print op <b>100% / werkelijke grootte</b>.</p>' +
-      '<div class="btns two mt"><button class="btn primary tall" id="pv-print">Afdrukken</button><button class="btn tall" id="pv-pdf">PDF</button></div>' +
+      '<p class="tiny muted mt">Afgedrukt wordt alleen de zwarte tekst' + (isCal ? ' en de kaders/kruisjes' : '') + ', zonder logo of formulierlijnen.</p>' +
+      '<button class="btn primary tall mt" id="pv-print">Afdrukken</button>' +
+      '<p class="tiny muted" style="margin:6px 0 0">Het deelmenu opent: kies <b>Druk af</b> → printer → <b>100%</b>.</p>' +
+      '<button class="btn ghost mt" id="pv-safari">Afdrukken via Safari (noodoptie)</button>' +
       '<button class="btn ghost mt" data-close>Sluiten</button>', { full: true });
     function draw() {
       var wrap = $('#pv-wrap'), sc = $('#pv-scale');
@@ -722,10 +729,13 @@
     }
     draw();
     $('#pv-bg').onchange = function () { S.settings.showFormBg = this.checked; saveSettings(); draw(); };
-    $('#pv-print').onclick = function () { if (isCal) doPrint(items); else printWeek(wi); };
-    $('#pv-pdf').onclick = function () {
+    $('#pv-print').onclick = function () {
       if (isCal) sharePdf(window.MiniPDF.make(items, transform(), 'Kalibratie'), 'Kalibratie_urenformulier.pdf');
-      else pdfWeek(wi);
+      else printWeek(wi);
+    };
+    $('#pv-safari').onclick = function () {
+      if (!confirm('Let op: Safari voegt eigen marges en een kop-/voettekst toe, waardoor de posities niet kloppen. Alleen gebruiken als afdrukken via het deelmenu niet lukt. Doorgaan?')) return;
+      if (isCal) doPrint(items); else browserPrintWeek(wi);
     };
     window.onresize = function () { if (!$('#sheet').hidden && $('#pv-scale')) draw(); };
   }
@@ -866,17 +876,17 @@
       '<div class="btns"><button class="btn primary" id="s-cal">Kalibratiepagina bekijken / afdrukken</button>' +
       '<button class="btn ghost" id="s-calreset">Printinstellingen terugzetten</button></div>' +
       '<details><summary>Zo kalibreer je</summary><ol class="help">' +
-      '<li>Druk de kalibratiepagina af op een <b>gewoon wit A4-vel</b> (100% / werkelijke grootte).</li>' +
+      '<li>Druk de kalibratiepagina af op een <b>gewoon wit A4-vel</b>: Afdrukken → <b>Druk af</b> → 100%.</li>' +
       '<li>Meet de liniaal onderaan: die moet precies 100 mm zijn. Is hij 99 mm, zet de schaal op 101%.</li>' +
       '<li>Leg het vel op een leeg urenformulier en houd het tegen het licht (of het raam).</li>' +
       '<li>Staan de kruisjes te ver naar rechts? Maak de horizontale verschuiving negatief met dat aantal mm. Te laag? Maak de verticale verschuiving negatief.</li>' +
       '<li>Herhaal tot de kaders over de vakjes vallen. Daarna kun je een proef op een echt formulier doen.</li></ol></details></div>' +
 
       '<div class="card help"><h3>Afdrukken op de iPhone</h3><ul>' +
-      '<li>Tik op <b>Afdrukken</b> en kies je wifi-printer (AirPrint).</li>' +
+      '<li>Tik op <b>Afdrukken</b>. Het deelmenu opent met een PDF van het formulier: kies <b>Druk af</b> en je wifi-printer (AirPrint).</li>' +
       '<li>Papier: <b>A4</b>. Schaal: <b>100%</b> (niet “Passend maken”). Kies 1 exemplaar: het doordrukformulier maakt de kopie.</li>' +
       '<li>Leg de twee vellen van het doordrukformulier in de lade zoals je printer voorgedrukt papier verwacht (doe eerst een proef).</li>' +
-      '<li>Werkt afdrukken vanuit de app op het beginscherm niet goed? Gebruik <b>PDF</b> → in het deelmenu <b>Druk af</b>. Dat print op werkelijke grootte.</li></ul></div>' +
+      '<li>Waarom via PDF? Bij afdrukken vanuit de browser voegt iOS eigen marges en een kop-/voettekst toe. Dan verschuift alles en loopt het over naar een tweede pagina. Een PDF print op ware grootte.</li></ul></div>' +
 
       '<div class="card help"><h3>Herinneringen</h3><p class="small">Een webapp kan op de iPhone geen meldingen op een vast tijdstip sturen. De app waarschuwt daarom bij het openen: een dag die niet is afgesloten, een werkdag zonder registratie, en een lopende dag (blauwe balk bovenaan). Voor een dagelijkse herinnering stel je een automatisering in via de app <b>Opdrachten</b> (zie de handleiding).</p></div>' +
 

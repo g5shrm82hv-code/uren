@@ -276,7 +276,8 @@ summary { font-weight: 700; color: var(--ral); cursor: pointer; padding: 8px 0; 
   html, body { background: #fff !important; margin: 0 !important; padding: 0 !important; }
   body > *:not(#print-root) { display: none !important; }
   #print-root { display: block !important; }
-  #print-root .sheet-a4 { box-shadow: none; page-break-after: avoid; break-after: avoid; }
+  /* noodoptie Safari-print: iets lager dan A4 zodat het met de iOS-marges op één pagina past */
+  #print-root .sheet-a4 { box-shadow: none; height: 262mm; page-break-after: avoid; break-after: avoid; page-break-inside: avoid; }
   #print-root .bg { display: none !important; }
   #print-root .f.warn { background: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
