@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Derks Uren</title>
+  <meta name="description" content="Urenregistratie Transportbedrijf P.A.M. Derks B.V.">
+  <meta name="theme-color" content="#2271B3">
+  <meta name="color-scheme" content="light dark">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Derks Uren">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+  <!-- Opstartscherm -->
+  <div id="splash" aria-hidden="true">
+    <div class="splash-card"><img src="logo.png" alt="Derks"></div>
+    <div class="splash-sub">Urenregistratie</div>
+  </div>
+
+  <div id="app">
+    <div class="stickyhead">
+    <header class="topbar">
+      <img class="logo" src="logo.png" alt="Derks">
+      <div class="topbar-title">
+        <div class="t1">Urenregistratie</div>
+        <div class="t2" id="hdr-name"></div>
+      </div>
+      <div class="stripes" aria-hidden="true"><i></i><i></i><i></i></div>
+    </header>
+    <div id="runstrip" class="runstrip" hidden></div>
+    </div>
+
+    <main id="main"></main>
+
+    <nav class="tabbar" id="tabbar">
+      <button data-tab="vandaag" class="active">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Vandaag</span>
+      </button>
+      <button data-tab="week">
+        <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Week</span>
+      </button>
+      <button data-tab="backup">
+        <svg viewBox="0 0 24 24"><path d="M7 18a5 5 0 0 1-.6-9.96A6 6 0 0 1 18 9a4.5 4.5 0 0 1-.5 9z"/><path d="M12 11v6M9.5 13.5 12 11l2.5 2.5"/></svg><span>Back-up</span><b class="dot" id="backup-dot" hidden></b>
+      </button>
+      <button data-tab="instellingen">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg><span>Instellingen</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Onderblad (bewerken, afsluiten, voorvertoning) -->
+  <div id="sheet-backdrop" hidden></div>
+  <section id="sheet" role="dialog" aria-modal="true" hidden></section>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Alleen zichtbaar bij afdrukken -->
+  <div id="print-root"></div>
+
+  <input type="file" id="restore-file" accept="application/json,.json" hidden>
+
+  <script src="time.js"></script>
+  <script src="form-config.js"></script>
+  <script src="pdf.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
