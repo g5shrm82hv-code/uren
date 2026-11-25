@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   var D = window.DT;
-  var APP_VERSION = '1.0.0';
+  var APP_VERSION = '1.0.3';
 
   // ================================================================
   //  Hulpfuncties
@@ -636,8 +636,12 @@
   //  Formulier renderen (voorvertoning + print)
   // ================================================================
   function transform() {
-    var s = S.settings;
-    return { ox: +s.offsetX || 0, oy: +s.offsetY || 0, sx: (+s.scaleX || 100) / 100, sy: (+s.scaleY || 100) / 100 };
+    var s = S.settings, P = (window.FORM && window.FORM.printer) || { scaleX: 1, scaleY: 1, offsetX: 0, offsetY: 0 };
+    // vaste printercorrectie uit form-config.js + eigen fijnafstelling uit Instellingen
+    return {
+      ox: P.offsetX + (+s.offsetX || 0), oy: P.offsetY + (+s.offsetY || 0),
+      sx: P.scaleX * (+s.scaleX || 100) / 100, sy: P.scaleY * (+s.scaleY || 100) / 100
+    };
   }
   function sheetHTML(items, opts) {
     opts = opts || {};

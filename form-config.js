@@ -13,17 +13,21 @@
     pageW: 210, pageH: 297,
     padding: 1.2,            // binnenmarge in een vakje (mm)
 
+    // Printercorrectie (gemeten met kalibratie 25-11-2026: liniaal 99,65 mm, alles iets te hoog en te ver rechts).
+    // Geldt voor alles wat geprint wordt. De instellingen in de app komen hier nog bovenop (standaard 0).
+    printer: { scaleX: 1.0035, scaleY: 1.0035, offsetX: -0.8, offsetY: 0.5 },
+
     // Kop rechtsboven
-    weeknummer: { x: 104.3, y: 17.4, w: 87.2, h: 5.8, align: 'left' },
-    weekVan:    { x: 104.3, y: 23.2, w: 33.0, h: 5.8, align: 'left' },  // tussen "van" en "t/m"
-    weekTm:     { x: 143.5, y: 23.2, w: 48.0, h: 5.8, align: 'left' },  // rechts van "t/m"
-    naam:       { x: 104.3, y: 29.0, w: 87.2, h: 5.8, align: 'left' },
+    weeknummer: { x: 104.3, y: 20.7, w: 87.2, h: 5.5, align: 'left' },
+    weekVan:    { x: 104.3, y: 26.3, w: 33.0, h: 5.5, align: 'left' },  // tussen "van" en "t/m"
+    weekTm:     { x: 143.5, y: 26.3, w: 48.0, h: 5.5, align: 'left' },  // rechts van "t/m"
+    naam:       { x: 104.3, y: 31.8, w: 87.2, h: 5.5, align: 'left' },
 
     // Bovenste tabel: bovenkant van de regels maandag … zondag, en de totaalregel
     top: {
-      rowY: [88.0, 93.9, 99.8, 105.5, 111.4, 117.2, 123.0],
-      totaalY: 128.8,
-      rowH: 5.8,
+      rowY: [89.6, 95.3, 101.0, 106.5, 112.2, 117.8, 123.4],
+      totaalY: 129.1,
+      rowH: 5.6,
       productie: { x: 37.4, w: 13.6, align: 'center' },
       totaal:    { x: 104.7, w: 19.2, align: 'center' }
     },
@@ -31,10 +35,10 @@
     // Blok PRODUCTIE: bovenkant van de EERSTE regel per dag, maandag … zaterdag
     prod: {
       rowY: [157.6, 174.7, 191.9, 209.2, 226.6, 244.3],
-      rowH: 5.7,
+      rowH: 5.6,
       werk:         { x: 38.1, w: 40.5, align: 'left' },
       uur:          { x: 78.6, w: 13.3, align: 'center' },
-      omschrijving: { x: 105.2, w: 88.1, align: 'left' }
+      omschrijving: { x: 105.2, w: 86.5, align: 'left' }
     }
   };
 
